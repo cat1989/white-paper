@@ -1,0 +1,26 @@
+{
+  "name": "white-paper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vite build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cat1989/white-paper.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cat1989/white-paper/issues"
+  },
+  "homepage": "https://github.com/cat1989/white-paper#readme",
+  "devDependencies": {
+    "dotenv": "^10.0.0",
+    "typescript": "^4.5.2",
+    "vite": "^2.7.1"
+  }
+}
