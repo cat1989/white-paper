@@ -4,6 +4,7 @@ import { Rectangle } from '../rectangle'
 import { Color } from '../color'
 import { Nullable } from '../nullable'
 import { Vector2 } from '../vector2'
+import { MathHelper } from '../math-helper'
 
 /**
  * Enables a group of sprites to be drawn using the same settings.
@@ -30,10 +31,7 @@ export class SpriteBatch {
      * Prepares the graphics device for drawing sprites.
      */
     begin() {
-        const context = this.graphicsDevice.canvas.getContext("2d")
-        if (context) {
-            context.save()
-        }
+        
     }
 
     /**
@@ -150,6 +148,7 @@ export class SpriteBatch {
     ) {
         const context = this.graphicsDevice.canvas.getContext("2d")
         if (context) {
+            context.save()
             if (value2 instanceof Color) {
                 if (value1 instanceof Rectangle) {
                     context.drawImage(
@@ -165,22 +164,36 @@ export class SpriteBatch {
                 }
             }
             else {
+                let x = value1.x
+                let y = value1.y
                 if (rotation !== undefined && origin !== undefined) {
-                    // TODO
+                    context.setTransform(1, 0, 0, 1, 0, 0)
+                    context.translate(x + origin.x, y + origin.y)
+                    x = -origin.x
+                    y = -origin.y
+                    if (scale !== undefined) {
+                        if (scale instanceof Vector2) {
+                            context.scale(scale.x, scale.y)
+                        }
+                        else {
+                            context.scale(scale, scale)
+                        }
+                    }
+                    context.rotate(MathHelper.toRadians(rotation))
                 }
                 if (value2 instanceof Rectangle) {
                     if (value1 instanceof Rectangle) {
                         context.drawImage(
                             texture.image,
                             value2.x, value2.y, value2.width, value2.height,
-                            value1.x, value1.y, value1.width, value1.height,
+                            x, y, value1.width, value1.height,
                         )
                     }
                     else {
                         context.drawImage(
                             texture.image,
                             value2.x, value2.y, value2.width, value2.height,
-                            value1.x, value1.y, texture.image.width, texture.image.height,
+                            x, y, texture.image.width, texture.image.height,
                         )
                     }
                 }
@@ -188,17 +201,18 @@ export class SpriteBatch {
                     if (value1 instanceof Rectangle) {
                         context.drawImage(
                             texture.image,
-                            value1.x, value1.y, value1.width, value1.height
+                            x, y, value1.width, value1.height
                         )
                     }
                     else {
                         context.drawImage(
                             texture.image,
-                            value1.x, value1.y,
+                            x, y,
                         )
                     }
                 }
             }
+            context.restore()
         }
     }
 
@@ -206,9 +220,6 @@ export class SpriteBatch {
      * Flushes the sprite batch and restores the device state to how it was before Begin was called.
      */
     end() {
-        const context = this.graphicsDevice.canvas.getContext("2d")
-        if (context) {
-            context.restore()
-        }
+        
     }
 }
