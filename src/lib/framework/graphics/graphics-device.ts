@@ -15,11 +15,11 @@ export class GraphicsDevice {
     constructor() {
         this.canvas = document.createElement("canvas")
         this.viewport = new Viewport()
-        this.viewport.x = 0
-        this.viewport.y = 0
-        this.viewport.width = window.innerWidth
-        this.viewport.height = window.innerHeight
         const resetCanvas = () => {
+            this.viewport.x = 0
+            this.viewport.y = 0
+            this.viewport.width = window.innerWidth
+            this.viewport.height = window.innerHeight
             this.canvas.width = this.viewport.width
             this.canvas.height = this.viewport.height
         }
