@@ -16,9 +16,10 @@ export class Game1 extends Game {
 
     texture: Texture2D;
     position = Vector2.zero;
-    rectangle = new Rectangle(0, 0, 32, 32);
+    rectangle = new Rectangle(0, 0, 40, 40);
     spriteBatch: SpriteBatch;
-    speed: Vector2 = new Vector2(50, 50)
+    speed: Vector2 = new Vector2(50, 50);
+    rotation = 0;
 
     constructor() {
         super()
@@ -26,7 +27,8 @@ export class Game1 extends Game {
         this.graphics = new GraphicsDeviceManager(this)
         this.content = new ContentManager(this.graphics.graphicsDevice)
         this.spriteBatch = new SpriteBatch(this.graphics.graphicsDevice)
-        this.texture = this.content.load('train.gif')
+        this.texture = this.content.load('ball.svg')
+        //this.texture = this.content.load('train.gif')
     }
 
     protected initialize() {
@@ -43,8 +45,6 @@ export class Game1 extends Game {
     protected update(gameTime: GameTime) {
         const keyboardState = Keyboard.getState()
         const mouseState = Mouse.getState()
-        // this.rectangle.x = mouseState.x
-        // this.rectangle.y = mouseState.y
         this.rectangle.x += this.speed.x * gameTime.elapsedGameTime / 1000
         this.rectangle.y += this.speed.y * gameTime.elapsedGameTime / 1000
         if (this.rectangle.x > this.graphics.graphicsDevice.viewport.width - this.rectangle.width) {
@@ -63,6 +63,7 @@ export class Game1 extends Game {
             this.speed.y *= -1
             this.rectangle.y = 0
         }
+        this.rotation = (this.rotation + gameTime.elapsedGameTime * .5) % 360
         // if (keyboardState.isKeyDown(Keys.Up)) {
         //     this.rectangle.y -= 1
         // }
@@ -95,7 +96,11 @@ export class Game1 extends Game {
         this.spriteBatch.draw(
             this.texture,
             this.rectangle,
+            null,
             Color.white,
+            this.rotation,
+            new Vector2(this.rectangle.width * .5, this.rectangle.height * .5),
+            //1,
         )
         // this.spriteBatch.draw(
         //     this.texture,
