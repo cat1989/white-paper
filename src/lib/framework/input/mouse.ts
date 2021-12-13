@@ -7,21 +7,27 @@ const mouseState: MouseState = {
     rightButton: ButtonState.Released,
     scrollWheelValue: 0,
     x: 0,
+    xButton1: ButtonState.Released,
+    xButton2: ButtonState.Released,
     y: 0,
 }
 
 window.addEventListener("mousedown", (e) => {
-    mouseState.x = e.pageX
-    mouseState.y = e.pageY
-    switch (e.buttons) {
-        case 1:
+    switch (e.button) {
+        case 0:
             mouseState.leftButton = ButtonState.Pressed
+            break
+        case 1:
+            mouseState.middleButton = ButtonState.Pressed
             break
         case 2:
-            mouseState.leftButton = ButtonState.Pressed
+            mouseState.rightButton = ButtonState.Pressed
             break
         case 3:
-            mouseState.leftButton = ButtonState.Pressed
+            mouseState.xButton1 = ButtonState.Pressed
+            break
+        case 4:
+            mouseState.xButton2 = ButtonState.Pressed
             break
     }
 })
@@ -32,15 +38,21 @@ window.addEventListener("mousemove", (e) => {
 })
 
 window.addEventListener("mouseup", (e) => {
-    switch (e.buttons) {
-        case 1:
+    switch (e.button) {
+        case 0:
             mouseState.leftButton = ButtonState.Released
+            break
+        case 1:
+            mouseState.middleButton = ButtonState.Released
             break
         case 2:
-            mouseState.leftButton = ButtonState.Released
+            mouseState.rightButton = ButtonState.Released
             break
         case 3:
-            mouseState.leftButton = ButtonState.Released
+            mouseState.xButton1 = ButtonState.Released
+            break
+        case 4:
+            mouseState.xButton2 = ButtonState.Released
             break
     }
 })

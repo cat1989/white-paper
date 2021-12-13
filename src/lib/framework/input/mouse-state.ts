@@ -30,6 +30,16 @@ export type MouseState = {
     x: number;
 
     /**
+     * Returns the state of XBUTTON1.
+     */
+    xButton1: ButtonState;
+
+    /**
+     * Returns the state of XBUTTON2.
+     */
+    xButton2: ButtonState;
+
+    /**
      * Specifies the vertical position of the mouse cursor.
      */
     y: number;
