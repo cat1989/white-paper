@@ -82,17 +82,6 @@ export class Game1 extends Game {
     protected draw(gameTime: GameTime) {
         this.graphics.graphicsDevice.clear(Color.cornflowerBlue)
         this.spriteBatch.begin()
-        // this.spriteBatch.draw(
-        //     this.texture,
-        //     this.position,
-        //     Color.white,
-        // )
-        // this.spriteBatch.draw(
-        //     this.texture,
-        //     this.position,
-        //     new Rectangle(0, 0, 64, 64),
-        //     Color.white,
-        // )
         this.spriteBatch.draw(
             this.texture,
             this.rectangle,
@@ -102,24 +91,6 @@ export class Game1 extends Game {
             new Vector2(this.rectangle.width * .5, this.rectangle.height * .5),
             //1,
         )
-        // this.spriteBatch.draw(
-        //     this.texture,
-        //     new Rectangle(0, 0, 64, 64),
-        //     new Rectangle(0, 0, 64, 64),
-        //     Color.white,
-        // )
-        // this.spriteBatch.draw(
-        //     this.texture,
-        //     this.position,
-        //     null,
-        //     Color.white,
-        // )
-        // this.spriteBatch.draw(
-        //     this.texture,
-        //     new Rectangle(0, 0, 64, 64),
-        //     null,
-        //     Color.white,
-        // )
         this.spriteBatch.end()
         super.draw(gameTime)
     }

@@ -1,7 +1,7 @@
 import { Texture2D, GraphicsDevice } from '../graphics'
 
 /**
- * The following tables list the members exposed by the ContentManager type.
+ * The ContentManager is the run-time component which loads managed objects from the binary files produced by the design time content pipeline. It also manages the lifespan of the loaded objects, disposing the content manager will also dispose any assets which are themselves IDisposable.
  */
 export class ContentManager {
     private _graphicsDevice: GraphicsDevice;
