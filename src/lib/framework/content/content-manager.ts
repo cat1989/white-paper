@@ -24,6 +24,7 @@ export class ContentManager {
      */
     load(assetName: string): Texture2D {
         const texture2D = new Texture2D(this._graphicsDevice)
+        texture2D.name = assetName
         this.assets.push({
             assetName,
             image: texture2D.image,
