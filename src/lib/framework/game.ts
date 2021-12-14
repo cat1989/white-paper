@@ -1,9 +1,15 @@
 import { GameTime } from './game-time'
+import { GameComponentCollection } from './game-component-collection'
+import { GameWindow } from './game-window'
 
 /**
  * Provides basic graphics device initialization, game logic, and rendering code.
  */
 export class Game {
+    private _components = new GameComponentCollection()
+
+    private _window = new GameWindow()
+
     /**
      * Initializes a new instance of this class, which provides basic graphics device initialization, game logic, rendering code, and a game loop.
      */
@@ -17,9 +23,23 @@ export class Game {
     }
 
     /**
+     * Gets the collection of GameComponents owned by the game.
+     */
+    get components() {
+        return this._components
+    }
+
+    /**
      * Gets or sets a value indicating whether the mouse cursor should be visible.
      */
     isMouseVisible: boolean;
+
+    /**
+     * Gets the underlying operating system window.
+     */
+    get window() {
+        return this._window
+    }
     
     /**
      * Call this method to initialize the game, begin running the game loop, and start processing events for the game.
@@ -93,6 +113,6 @@ export class Game {
      * @param gameTime Time passed since the last call to Update.
      */
     protected update(gameTime: GameTime) {
-
+        
     }
 }
