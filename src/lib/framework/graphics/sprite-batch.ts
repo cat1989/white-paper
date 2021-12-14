@@ -5,6 +5,7 @@ import { Color } from '../color'
 import { Nullable } from '../nullable'
 import { Vector2 } from '../vector2'
 import { MathHelper } from '../math-helper'
+import { SpriteFont } from './sprite-font'
 
 /**
  * Enables a group of sprites to be drawn using the same settings.
@@ -169,8 +170,8 @@ export class SpriteBatch {
                 if (rotation !== undefined && origin !== undefined) {
                     context.setTransform(1, 0, 0, 1, 0, 0)
                     context.translate(x + origin.x, y + origin.y)
-                    x = -origin.x
-                    y = -origin.y
+                    x -= x + origin.x
+                    y -= y + origin.y
                     if (scale !== undefined) {
                         if (scale instanceof Vector2) {
                             context.scale(scale.x, scale.y)
@@ -212,6 +213,93 @@ export class SpriteBatch {
                     }
                 }
             }
+            context.restore()
+        }
+    }
+
+    /**
+     * Adds a sprite string to the batch of sprites to be rendered, specifying the font, output text, screen position, and color tint.
+     * @param spriteFont The sprite font.
+     * @param text The string to draw.
+     * @param position The location, in screen coordinates, where the text will be drawn.
+     * @param color The desired color of the text.
+     */
+    drawString(
+        spriteFont: SpriteFont,
+        text: string,
+        position: Vector2,
+        color: Color,
+    ): void;
+    /**
+     * Adds a sprite string to the batch of sprites to be rendered, specifying the font, output text, screen position, color tint, rotation, origin, scale, and effects.
+     * @param spriteFont The sprite font.
+     * @param text The string to draw.
+     * @param position The location, in screen coordinates, where the text will be drawn.
+     * @param color The desired color of the text.
+     * @param rotation The angle, in radians, to rotate the text around the origin.
+     * @param origin The origin of the string. Specify (0,0) for the upper-left corner.
+     * @param scale Uniform multiple by which to scale the sprite width and height.
+     */
+    drawString(
+        spriteFont: SpriteFont,
+        text: string,
+        position: Vector2,
+        color: Color,
+        rotation: number,
+        origin: Vector2,
+        scale: number,
+    ): void;
+    /**
+     * Adds a sprite string to the batch of sprites to be rendered, specifying the font, output text, screen position, color tint, rotation, origin, scale, effects, and depth.
+     * @param spriteFont The sprite font.
+     * @param text The string to draw.
+     * @param position The location, in screen coordinates, where the text will be drawn.
+     * @param color The desired color of the text.
+     * @param rotation The angle, in radians, to rotate the text around the origin.
+     * @param origin The origin of the string. Specify (0,0) for the upper-left corner.
+     * @param scale Vector containing separate scalar multiples for the x- and y-axes of the sprite.
+     */
+    drawString(
+        spriteFont: SpriteFont,
+        text: string,
+        position: Vector2,
+        color: Color,
+        rotation: number,
+        origin: Vector2,
+        scale: Vector2,
+    ): void;
+    drawString(
+        spriteFont: SpriteFont,
+        text: string,
+        position: Vector2,
+        color: Color,
+        rotation?: number,
+        origin?: Vector2,
+        scale?: number | Vector2,
+    ) {
+        const context = this.graphicsDevice.canvas.getContext("2d")
+        if (context) {
+            context.save()
+            let x = position.x
+            let y = position.y
+            if (rotation !== undefined && origin !== undefined && scale !== undefined) {
+                context.setTransform(1, 0, 0, 1, 0, 0)
+                context.translate(position.x + origin.x, position.y + origin.y)
+                x -= position.x + origin.x
+                y -= position.y + origin.y
+                if (scale instanceof Vector2) {
+                    context.scale(scale.x, scale.y)
+                }
+                else {
+                    context.scale(scale, scale)
+                }
+                context.rotate(MathHelper.toRadians(rotation))
+            }
+            context.textAlign = 'left'
+            context.textBaseline = 'top'
+            context.font = spriteFont.font
+            context.fillStyle = `rgba(${color.r},${color.g},${color.b},${color.a})`
+            context.fillText(text, x, y)
             context.restore()
         }
     }
